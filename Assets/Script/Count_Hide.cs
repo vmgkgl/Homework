@@ -7,7 +7,7 @@ public class Count_Hide : MonoBehaviour
     public string targetObjectName;
     public int addValue = 1;
 
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.name == targetObjectName)
         {

@@ -4,16 +4,14 @@ using UnityEngine;
 
 public class Boy : MonoBehaviour
 {
-    public float speed = 3; 
-    public float jumppower = 8;  
+    public float speed = 3;
+    public float jumppower = 8;
 
     float vx = 0;
-    float vy = 0;
-
-    bool leftFlag = false; 
-    bool pushFlag = false; 
-    bool jumpFlag = false; 
-    bool groundFlag = false;
+    bool leftFlag = false;
+    bool pushFlag = false;
+    bool jumpFlag = false;
+    bool groundFlag = true;
     Rigidbody2D rbody;
 
     void Start()
@@ -22,61 +20,53 @@ public class Boy : MonoBehaviour
         rbody.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 
-    void Update() 
+    void Update()
     {
         vx = 0;
-        vy = 0;
-        if (Input.GetKey("right")) 
+        if (Input.GetKey("right"))
         {
-            vx = speed; 
+            vx = speed;
             leftFlag = false;
         }
-        if (Input.GetKey("left")) 
-        { 
-            vx = -speed; 
+        if (Input.GetKey("left"))
+        {
+            vx = -speed;
             leftFlag = true;
         }
-        
-        
+
         if (Input.GetKey("space") && groundFlag)
         {
             if (pushFlag == false)
             {
-                jumpFlag = true;  
-                pushFlag = true; 
+                jumpFlag = true;
+                pushFlag = true;
             }
         }
         else
         {
-            pushFlag = false; 
+            pushFlag = false;
         }
     }
-    void FixedUpdate() 
+    void FixedUpdate()
     {
-      
+
         rbody.velocity = new Vector2(vx, rbody.velocity.y);
-      
+
         this.GetComponent<SpriteRenderer>().flipX = leftFlag;
-       
+
         if (jumpFlag)
         {
             jumpFlag = false;
+            rbody.gravityScale = 1f;
             rbody.AddForce(new Vector2(0, jumppower), ForceMode2D.Impulse);
         }
     }
-    void OnTriggerStay2D(Collider2D collision)
-    {  
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
         groundFlag = true;
-
-        if(Input.GetKey("up"))
-        {
-            Debug.Log("dd");
-            vy = speed;
-
-        }
     }
-    void OnTriggerExit2D(Collider2D collision)
-    { 
+    private void OnCollisionExit2D(Collision2D collision)
+    {
         groundFlag = false;
     }
 }

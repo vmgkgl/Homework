@@ -9,7 +9,7 @@ public class SwitchScene : MonoBehaviour
     public string targetObjectName; 
     public string sceneName; 
 
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.name == targetObjectName)
         {

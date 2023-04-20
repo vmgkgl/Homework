@@ -4,28 +4,28 @@ using UnityEngine;
 
 public class Ghost : MonoBehaviour
 {
-    public string targetObjectName; 
-    public float speed = 1; 
+    public string targetObjectName;
+    public float speed = 1;
+    public float accSpeed = 1f;
 
     GameObject targetObject;
     Rigidbody2D rbody;
-
     void Start()
-    { 
+    {
         targetObject = GameObject.Find(targetObjectName);
         rbody = GetComponent<Rigidbody2D>();
         rbody.gravityScale = 0;
         rbody.constraints = RigidbodyConstraints2D.FreezeRotation;
+        accSpeed = Random.Range(1f, 10f);
     }
 
-    void FixedUpdate()
-    { 
+    private void FixedUpdate()
+    {
         Vector3 dir = (targetObject.transform.position - this.transform.position).normalized;
-      
-        float vx = dir.x * speed;
-        float vy = dir.y * speed;
-        rbody.velocity = new Vector2(vx, vy);
-     
-        this.GetComponent<SpriteRenderer>().flipX = (vx < 0);
+        transform.up = Vector3.Lerp(transform.up, dir, Time.deltaTime * accSpeed);
+        transform.position += transform.up * Time.deltaTime * speed;
+    }
+    void Update()
+    {
     }
 }

@@ -40,6 +40,7 @@ public class Boy : MonoBehaviour
             {
                 jumpFlag = true;
                 pushFlag = true;
+                groundFlag = false;
             }
         }
         else
@@ -64,9 +65,5 @@ public class Boy : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         groundFlag = true;
-    }
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        groundFlag = false;
     }
 }

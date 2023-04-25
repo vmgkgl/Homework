@@ -12,7 +12,6 @@ public class Throw : MonoBehaviour
     public float throwY = 8;
     public float offsetY = 1;
 
-    bool pushFlag = false;
     bool leftFlag = false;
     private void Start()
     {
